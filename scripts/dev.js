@@ -71,7 +71,7 @@ build({
   outfile,
   bundle: true,
   external,
-  sourcemap: true,
+  sourcemap: 'both',
   format: outputFormat,
   globalName: pkg.buildOptions?.name,
   platform: format === 'cjs' ? 'node' : 'browser',
