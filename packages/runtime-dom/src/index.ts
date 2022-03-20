@@ -31,6 +31,7 @@ declare module '@vue/reactivity' {
   }
 }
 
+// 操作dom节点方法
 const rendererOptions = extend({ patchProp }, nodeOps)
 
 // lazy create the renderer - this makes core renderer logic tree-shakable

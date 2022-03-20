@@ -1,0 +1,39 @@
+{
+	"files": [
+		{
+			"path": "packages/runtime-dom/src/index.ts",
+			"bookmarks": [
+				{
+					"line": 65,
+					"column": 15,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "packages/runtime-core/src/renderer.ts",
+			"bookmarks": [
+				{
+					"line": 358,
+					"column": 13,
+					"label": ""
+				},
+				{
+					"line": 2321,
+					"column": 14,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "packages/runtime-core/src/apiCreateApp.ts",
+			"bookmarks": [
+				{
+					"line": 180,
+					"column": 22,
+					"label": ""
+				}
+			]
+		}
+	]
+}
