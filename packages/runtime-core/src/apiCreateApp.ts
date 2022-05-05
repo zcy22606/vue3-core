@@ -178,6 +178,7 @@ export function createAppAPI<HostElement>(
   render: RootRenderFunction,
   hydrate?: RootHydrateFunction
 ): CreateAppFunction<HostElement> {
+  // 创建 app 相关配置
   return function createApp(rootComponent, rootProps = null) {
     if (rootProps != null && !isObject(rootProps)) {
       __DEV__ && warn(`root props passed to app.mount() must be an object.`)
@@ -188,7 +189,7 @@ export function createAppAPI<HostElement>(
     const installedPlugins = new Set()
 
     let isMounted = false
-
+    // App初始化，将 createApp的参数设置为根组件，设置context，挂载 use，mixin，component，directive, mount,unmount,provider方法
     const app: App = (context.app = {
       _uid: uid++,
       _component: rootComponent as ConcreteComponent,
@@ -252,6 +253,7 @@ export function createAppAPI<HostElement>(
         if (!component) {
           return context.components[name]
         }
+
         if (__DEV__ && context.components[name]) {
           warn(`Component "${name}" has already been registered in target app.`)
         }
@@ -289,6 +291,7 @@ export function createAppAPI<HostElement>(
           vnode.appContext = context
 
           // HMR root reload
+          // ? 热更新
           if (__DEV__) {
             context.reload = () => {
               render(cloneVNode(vnode), rootContainer, isSVG)

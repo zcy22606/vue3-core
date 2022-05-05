@@ -67,6 +67,7 @@ export const hydrate = ((...args) => {
 export const createApp = ((...args) => {
   const app = ensureRenderer().createApp(...args)
 
+  // 给 app 注入标签检测 和 编译参数检查方法
   if (__DEV__) {
     injectNativeTagCheck(app)
     injectCompilerOptionsCheck(app)
@@ -74,6 +75,7 @@ export const createApp = ((...args) => {
 
   const { mount } = app
   app.mount = (containerOrSelector: Element | ShadowRoot | string): any => {
+    // 初始化根节点容器为 dom 对象
     const container = normalizeContainer(containerOrSelector)
     if (!container) return
 
