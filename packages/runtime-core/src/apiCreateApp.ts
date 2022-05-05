@@ -178,7 +178,7 @@ export function createAppAPI<HostElement>(
   render: RootRenderFunction,
   hydrate?: RootHydrateFunction
 ): CreateAppFunction<HostElement> {
-  // 创建 app 相关配置
+  // 真实的 createeApp 入口,创建 app 相关配置
   return function createApp(rootComponent, rootProps = null) {
     if (rootProps != null && !isObject(rootProps)) {
       __DEV__ && warn(`root props passed to app.mount() must be an object.`)
@@ -212,6 +212,8 @@ export function createAppAPI<HostElement>(
         }
       },
 
+      // 插件注册可以是一个带有 install 方法的类 或者是一个函数
+      // 当调用 app.use(plugin) 时，会将 app 实例传入到插件内部，插件内部可以往 app 上注册组件或者方法
       use(plugin: Plugin, ...options: any[]) {
         if (installedPlugins.has(plugin)) {
           __DEV__ && warn(`Plugin has already been applied to target app.`)
@@ -230,6 +232,9 @@ export function createAppAPI<HostElement>(
         return app
       },
 
+      // 全局注册是放在 app.context 上的
+
+      // 全局混入
       mixin(mixin: ComponentOptions) {
         if (__FEATURE_OPTIONS_API__) {
           if (!context.mixins.includes(mixin)) {
@@ -246,6 +251,7 @@ export function createAppAPI<HostElement>(
         return app
       },
 
+      // 全局注册组件
       component(name: string, component?: Component): any {
         if (__DEV__) {
           validateComponentName(name, context.config)
@@ -261,6 +267,7 @@ export function createAppAPI<HostElement>(
         return app
       },
 
+      // 全局注册指令
       directive(name: string, directive?: Directive) {
         if (__DEV__) {
           validateDirectiveName(name)
@@ -276,22 +283,26 @@ export function createAppAPI<HostElement>(
         return app
       },
 
+      // 全局挂载方法
       mount(
         rootContainer: HostElement,
         isHydrate?: boolean,
         isSVG?: boolean
       ): any {
+        // 判断是否是第一次挂载
         if (!isMounted) {
+          // 根据传入的 根组件创建 vNode
           const vnode = createVNode(
             rootComponent as ConcreteComponent,
             rootProps
           )
           // store app context on the root VNode.
           // this will be set on the root instance on initial mount.
+          // 将根节点的上下文 设置到 根组件的 appContext 上
           vnode.appContext = context
 
           // HMR root reload
-          // ? 热更新
+          // 热更新重载
           if (__DEV__) {
             context.reload = () => {
               render(cloneVNode(vnode), rootContainer, isSVG)

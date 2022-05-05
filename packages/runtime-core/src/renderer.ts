@@ -289,6 +289,8 @@ export const queuePostRenderEffect = __FEATURE_SUSPENSE__
  * })
  * ```
  */
+
+// 创建渲染器
 export function createRenderer<
   HostNode = RendererNode,
   HostElement = RendererElement
@@ -326,14 +328,15 @@ function baseCreateRenderer(
   if (__ESM_BUNDLER__ && !__TEST__) {
     initFeatureFlags()
   }
-
+  // 初始化 this
   const target = getGlobalThis()
   target.__VUE__ = true
-  // 设置 devtools
+  // 设置 devTool 工具，浏览器插件
   if (__DEV__ || __FEATURE_PROD_DEVTOOLS__) {
     setDevtoolsHook(target.__VUE_DEVTOOLS_GLOBAL_HOOK__, target)
   }
 
+  // 从 options 中结构操作 dom 元素的方法
   const {
     insert: hostInsert,
     remove: hostRemove,
@@ -352,6 +355,21 @@ function baseCreateRenderer(
 
   // Note: functions inside this closure should use `const xxx = () => {}`
   // style in order to prevent being inlined by minifiers.
+
+  // patch 方法
+  /**
+   *
+   * @param n1 节点 1
+   * @param n2
+   * @param container
+   * @param anchor
+   * @param parentComponent
+   * @param parentSuspense
+   * @param isSVG
+   * @param slotScopeIds
+   * @param optimized
+   * @returns
+   */
   const patch: PatchFn = (
     n1,
     n2,
@@ -2301,6 +2319,7 @@ function baseCreateRenderer(
     return hostNextSibling((vnode.anchor || vnode.el)!)
   }
 
+  // render函数
   const render: RootRenderFunction = (vnode, container, isSVG) => {
     if (vnode == null) {
       if (container._vnode) {
