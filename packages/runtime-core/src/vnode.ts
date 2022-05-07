@@ -449,7 +449,7 @@ function createBaseVNode(
       : ShapeFlags.ARRAY_CHILDREN
   }
 
-  // validate key
+  // 验证 key
   if (__DEV__ && vnode.key !== vnode.key) {
     warn(`VNode created with invalid key (NaN). VNode type:`, vnode.type)
   }
@@ -541,7 +541,7 @@ function _createVNode(
     }
   }
 
-  // encode the vnode type information into a bitmap
+  // 将vnode类型信息编码为位图
   const shapeFlag = isString(type)
     ? ShapeFlags.ELEMENT
     : __FEATURE_SUSPENSE__ && isSuspense(type)
@@ -565,7 +565,7 @@ function _createVNode(
       type
     )
   }
-
+  // 创建基础 vNode
   return createBaseVNode(
     type,
     props,
