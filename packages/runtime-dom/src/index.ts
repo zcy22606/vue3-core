@@ -26,13 +26,11 @@ import {
 
 declare module '@vue/reactivity' {
   export interface RefUnwrapBailTypes {
-    // Note: if updating this, also update `types/refBail.d.ts`.
     runtimeDOMBailTypes: Node | Window
   }
 }
 
-// 操作dom节点方法
-const rendererOptions = extend({ patchProp }, nodeOps)
+const rendererOptions = /*#__PURE__*/ extend({ patchProp }, nodeOps)
 
 // lazy create the renderer - this makes core renderer logic tree-shakable
 // in case the user only imports reactivity utilities from Vue.
@@ -64,11 +62,9 @@ export const hydrate = ((...args) => {
   ensureHydrationRenderer().hydrate(...args)
 }) as RootHydrateFunction
 
-// createApp 入口
 export const createApp = ((...args) => {
   const app = ensureRenderer().createApp(...args)
 
-  // 给 app 注入标签检测 和 编译参数检查方法
   if (__DEV__) {
     injectNativeTagCheck(app)
     injectCompilerOptionsCheck(app)
@@ -76,7 +72,6 @@ export const createApp = ((...args) => {
 
   const { mount } = app
   app.mount = (containerOrSelector: Element | ShadowRoot | string): any => {
-    // 初始化根节点容器为 dom 对象
     const container = normalizeContainer(containerOrSelector)
     if (!container) return
 
@@ -211,7 +206,7 @@ export {
   defineCustomElement,
   defineSSRCustomElement,
   VueElement,
-  VueElementConstructor
+  type VueElementConstructor
 } from './apiCustomElement'
 
 // SFC CSS utilities
@@ -219,10 +214,10 @@ export { useCssModule } from './helpers/useCssModule'
 export { useCssVars } from './helpers/useCssVars'
 
 // DOM-only components
-export { Transition, TransitionProps } from './components/Transition'
+export { Transition, type TransitionProps } from './components/Transition'
 export {
   TransitionGroup,
-  TransitionGroupProps
+  type TransitionGroupProps
 } from './components/TransitionGroup'
 
 // **Internal** DOM-only runtime directive helpers
