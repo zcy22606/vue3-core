@@ -79,6 +79,7 @@ export interface AppConfig {
 
   performance: boolean
   optionMergeStrategies: Record<string, OptionMergeFunction>
+  /** 全局属性 */
   globalProperties: ComponentCustomProperties & Record<string, any>
   errorHandler?: (
     err: unknown,
