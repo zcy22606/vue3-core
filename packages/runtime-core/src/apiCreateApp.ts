@@ -70,7 +70,15 @@ export interface AppConfig {
 
   performance: boolean
   optionMergeStrategies: Record<string, OptionMergeFunction>
+  /** 全局属性 */
   globalProperties: Record<string, any>
+  /**
+   * 异常处理函数
+   * @param err
+   * @param instance
+   * @param info
+   * @returns
+   */
   errorHandler?: (
     err: unknown,
     instance: ComponentPublicInstance | null,
@@ -116,12 +124,12 @@ export interface AppContext {
    */
   optionsCache: WeakMap<ComponentOptions, MergedComponentOptions>
   /**
-   * Cache for normalized props options
+   * 缓存规范化的props选项
    * @internal
    */
   propsCache: WeakMap<ConcreteComponent, NormalizedPropsOptions>
   /**
-   * Cache for normalized emits options
+   * 缓存规范化的emits选项
    * @internal
    */
   emitsCache: WeakMap<ConcreteComponent, ObjectEmitsOptions | null>
